@@ -16,7 +16,11 @@ Observe → Explain → Optimize → Control → Automate
 ```
 - **v0.1.x (Current)**: **Observe & Explain** — Zero-overhead DAG tracing, token pricing engine, interval critical-path analysis, and severity-graded diagnostic findings.
 - **Milestone AIRUN-100**: Profile 100 real AI workload observations with 20 external engineers to identify the single recurring control-plane problem that teams will pay to eliminate.
-- **v0.2.0+ (Future)**: The validated wedge (Model Router & Optimizer, CI/CD Budget Guard, or Retry Storm Defense).
+- **v0.2.0+ (Future)**: The validated wedge selected from empirical signal:
+  1. *Execution Optimization & Model Routing*
+  2. *CI/CD Cost Regression & Budget Guard*
+  3. *Runtime Failure Protection & Circuit Breakers*
+  4. *Emergent Unanticipated Wedge*
 
 ---
 

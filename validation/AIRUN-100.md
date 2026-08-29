@@ -68,15 +68,15 @@ $$\text{Application / Domain} \times \text{Execution Strategy / Architecture} \t
 
 ---
 
-## 6. The 4-Candidate Decision Matrix for v0.2.0
+## 6. The Candidate Decision Matrix for v0.2.0
 
 ```mermaid
 graph TD
     A["Milestone AIRUN-100: 100 Workloads & 20 Engineers"] --> B["Evidence Synthesis: F x S x W x Feasibility"]
-    B --> C1["Hypothesis B: Model Router & Execution Optimizer<br>(Leading prior — Economics & Margins)"]
-    B --> C2["Hypothesis C: CI/CD Budget Guard & Regression Gate<br>(Governance & Release Safety)"]
-    B --> C3["Hypothesis A: Retry Storm Defense & Circuit Breaker<br>(Reliability & Flaky Tools)"]
-    B --> C4["Hypothesis D: Emergent Unanticipated Wedge<br>(e.g., Task Eval Provenance / Verification)"]
+    B --> C1["1. Execution Optimization & Model Routing<br>(Inference Economics & Cost Optimization)"]
+    B --> C2["2. CI/CD Cost Regression & Budget Guard<br>(Governance & Release Safety)"]
+    B --> C3["3. Runtime Failure Protection & Circuit Breakers<br>(Reliability & Flaky Tool Mitigation)"]
+    B --> C4["4. Emergent Unanticipated Wedge<br>(e.g., Task Eval Provenance / Verification)"]
     C1 --> DEC["Select ONE Winning Wedge for v0.2.0"]
     C2 --> DEC
     C3 --> DEC

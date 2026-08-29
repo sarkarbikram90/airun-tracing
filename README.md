@@ -1,6 +1,6 @@
 # AI Runtime Profiler (`airun`)
 
-[![CI](https://github.com/your-org/airun-tracing/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/airun-tracing/actions/workflows/ci.yml)
+[![CI](https://github.com/sarkarbikram90/airun-tracing/actions/workflows/ci.yml/badge.svg)](https://github.com/sarkarbikram90/airun-tracing/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)](pyproject.toml)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](pyproject.toml)
@@ -18,7 +18,8 @@
 - **Concurrent Critical Path**: Accurately computes critical-path latency across parallel tools using interval DAG scheduling.
 - **Automated Diagnostic Findings**: Heuristic detection of cost concentration, retry storms, token context bloat, and over-provisioned models.
 - **Outcome-Based Economics**: Explicit attribution of **Cost per Successful Outcome** vs **Wasted Cost** on failed/aborted executions.
-- **Regression Diffing (`airun compare`)**: Side-by-side run comparison to detect latency, token, and cost regressions.
+- **Regression Diffing (`airun compare`)**: Side-by-side run comparison to detect latency, token, cost, and quality regressions.
+- **The Evaluation Boundary**: Attach evaluation scores (`set_span_quality()`) to prove cost optimizations preserve output quality.
 - **Privacy by Default**: Automatic secret and API key redaction. Prompt and completion contents are never stored without explicit opt-in.
 - **OpenTelemetry Compatible**: Export traces directly as OTLP-compliant JSON.
 - **Ultra-Low Overhead**: Measured in-memory span overhead is $<20\mu\text{s}$ and total SQLite persistence overhead is $<1\text{ms}$ per workflow.
@@ -134,6 +135,39 @@ async def run_agent():
             )
 ```
 
+### 3. Zero-Code-Change CLI Profiling & CI/CD Integration
+
+Prefix any Python execution with `airun run` and capture trace IDs deterministically:
+
+```bash
+airun run --trace-id-file .airun/trace_id ./agents/my_agent.py
+airun report $(cat .airun/trace_id)
+```
+
+---
+
+## Comparing Runs (`airun compare`)
+
+Benchmark two architectures or model swaps side-by-side:
+
+```bash
+airun compare previous latest
+```
+
+```text
+                    Trace Comparison: 84081c95 vs 6f1fe728                    
++----------------------------------------------------------------------------+
+| Metric         | Run A (Baseline) | Run B (Optimized)|       Delta (B - A) |
+|----------------+------------------+------------------+---------------------|
+| Total Duration |          425.0ms |          177.0ms |   -248.0ms (-58.4%) |
+| Total Cost     |            $0.03 |          $0.0007 | $-0.027764 (-97.4%) |
+| Tokens         |            8,100 |            3,290 |              -4,810 |
+| Retries        |                2 |                0 |                  -2 |
+| Failed Steps   |                0 |                0 |                   0 |
+| Quality Score  |             0.94 |             0.95 |               +0.01 |
++----------------------------------------------------------------------------+
+```
+
 ---
 
 ## CLI Reference
@@ -167,13 +201,18 @@ python examples/lab/run_all.py
 
 ---
 
-## External Validation Kit
+## Documentation & Campaign Links
 
-Preparing to test with external engineering teams? Check the [`validation/`](validation/) directory:
-- [Validation Invitation](validation/invitation.md)
-- [Quickstart Checklist](validation/quickstart-checklist.md)
-- [Feedback Form](validation/feedback-form.md)
-- [Friction Log](validation/friction-log.md)
+- **Developer & AI Agent Guide**: [`agent.md`](agent.md)
+- **Milestone AIRUN-100 Charter**: [`validation/AIRUN-100.md`](validation/AIRUN-100.md)
+- **Campaign Outreach Playbook**: [`validation/outreach-playbook.md`](validation/outreach-playbook.md)
+- **Teardown Report Template**: [`validation/teardown-template.md`](validation/teardown-template.md)
+- **External Validation Kit**:
+  - [Validation Invitation](validation/invitation.md)
+  - [Quickstart Checklist](validation/quickstart-checklist.md)
+  - [Feedback Form](validation/feedback-form.md)
+  - [Friction Log](validation/results/friction-log.md)
+  - [Pain Ranking Matrix](validation/results/pain-ranking.md)
 
 ---
 
