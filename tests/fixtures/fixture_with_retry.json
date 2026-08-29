@@ -1,0 +1,63 @@
+{
+  "trace_id": "test-trace-with-retry-002",
+  "created_at": "2026-08-29T12:10:00.000000+00:00",
+  "spans": [
+    {
+      "trace_id": "test-trace-with-retry-002",
+      "span_id": "span-root-002",
+      "parent_id": null,
+      "name": "agent_workflow_retry",
+      "kind": "workflow",
+      "start_time": "2026-08-29T12:10:00.000000+00:00",
+      "end_time": "2026-08-29T12:10:01.800000+00:00",
+      "duration_ms": 1800.0,
+      "status": "success",
+      "provider": null,
+      "model": null,
+      "tokens_input": 0,
+      "tokens_output": 0,
+      "cost_usd": 0.0,
+      "retry_count": 0,
+      "error": null,
+      "metadata": {}
+    },
+    {
+      "trace_id": "test-trace-with-retry-002",
+      "span_id": "span-tool-002",
+      "parent_id": "span-root-002",
+      "name": "search_api_call",
+      "kind": "tool",
+      "start_time": "2026-08-29T12:10:00.100000+00:00",
+      "end_time": "2026-08-29T12:10:00.900000+00:00",
+      "duration_ms": 800.0,
+      "status": "retry",
+      "provider": "search_provider",
+      "model": null,
+      "tokens_input": 0,
+      "tokens_output": 0,
+      "cost_usd": 0.0,
+      "retry_count": 2,
+      "error": null,
+      "metadata": {"query": "test query"}
+    },
+    {
+      "trace_id": "test-trace-with-retry-002",
+      "span_id": "span-llm-002",
+      "parent_id": "span-root-002",
+      "name": "synthesis_call",
+      "kind": "llm",
+      "start_time": "2026-08-29T12:10:00.950000+00:00",
+      "end_time": "2026-08-29T12:10:01.750000+00:00",
+      "duration_ms": 800.0,
+      "status": "success",
+      "provider": "openai",
+      "model": "gpt-4o",
+      "tokens_input": 2000,
+      "tokens_output": 400,
+      "cost_usd": 0.009,
+      "retry_count": 0,
+      "error": null,
+      "metadata": {}
+    }
+  ]
+}

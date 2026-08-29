@@ -1,0 +1,44 @@
+{
+  "trace_id": "test-trace-simple-success-001",
+  "created_at": "2026-08-29T12:00:00.000000+00:00",
+  "spans": [
+    {
+      "trace_id": "test-trace-simple-success-001",
+      "span_id": "span-root-001",
+      "parent_id": null,
+      "name": "simple_workflow",
+      "kind": "workflow",
+      "start_time": "2026-08-29T12:00:00.000000+00:00",
+      "end_time": "2026-08-29T12:00:00.500000+00:00",
+      "duration_ms": 500.0,
+      "status": "success",
+      "provider": null,
+      "model": null,
+      "tokens_input": 0,
+      "tokens_output": 0,
+      "cost_usd": 0.0,
+      "retry_count": 0,
+      "error": null,
+      "metadata": {}
+    },
+    {
+      "trace_id": "test-trace-simple-success-001",
+      "span_id": "span-llm-001",
+      "parent_id": "span-root-001",
+      "name": "llm_planning",
+      "kind": "llm",
+      "start_time": "2026-08-29T12:00:00.050000+00:00",
+      "end_time": "2026-08-29T12:00:00.450000+00:00",
+      "duration_ms": 400.0,
+      "status": "success",
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "tokens_input": 1000,
+      "tokens_output": 500,
+      "cost_usd": 0.00045,
+      "retry_count": 0,
+      "error": null,
+      "metadata": {}
+    }
+  ]
+}

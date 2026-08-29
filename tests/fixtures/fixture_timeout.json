@@ -1,0 +1,50 @@
+{
+  "trace_id": "test-trace-timeout-004",
+  "created_at": "2026-08-29T12:30:00.000000+00:00",
+  "spans": [
+    {
+      "trace_id": "test-trace-timeout-004",
+      "span_id": "span-root-004",
+      "parent_id": null,
+      "name": "timeout_workflow",
+      "kind": "workflow",
+      "start_time": "2026-08-29T12:30:00.000000+00:00",
+      "end_time": "2026-08-29T12:30:05.000000+00:00",
+      "duration_ms": 5000.0,
+      "status": "timeout",
+      "provider": null,
+      "model": null,
+      "tokens_input": 0,
+      "tokens_output": 0,
+      "cost_usd": 0.0,
+      "retry_count": 0,
+      "error": {
+        "type": "TimeoutError",
+        "message": "LLM call exceeded maximum allowed latency threshold of 5000ms"
+      },
+      "metadata": {}
+    },
+    {
+      "trace_id": "test-trace-timeout-004",
+      "span_id": "span-llm-004",
+      "parent_id": "span-root-004",
+      "name": "stalled_llm_call",
+      "kind": "llm",
+      "start_time": "2026-08-29T12:30:00.050000+00:00",
+      "end_time": "2026-08-29T12:30:04.990000+00:00",
+      "duration_ms": 4940.0,
+      "status": "timeout",
+      "provider": "openai",
+      "model": "gpt-4",
+      "tokens_input": 500,
+      "tokens_output": 0,
+      "cost_usd": 0.015,
+      "retry_count": 0,
+      "error": {
+        "type": "TimeoutError",
+        "message": "Request timed out after 5 seconds"
+      },
+      "metadata": {}
+    }
+  ]
+}

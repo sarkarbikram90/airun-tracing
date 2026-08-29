@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  airun:
+    build: .
+    volumes:
+      - ./traces:/app/.airun
+    command: airun demo

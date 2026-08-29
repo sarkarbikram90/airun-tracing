@@ -1,0 +1,50 @@
+{
+  "trace_id": "test-trace-failed-tool-003",
+  "created_at": "2026-08-29T12:20:00.000000+00:00",
+  "spans": [
+    {
+      "trace_id": "test-trace-failed-tool-003",
+      "span_id": "span-root-003",
+      "parent_id": null,
+      "name": "failing_workflow",
+      "kind": "workflow",
+      "start_time": "2026-08-29T12:20:00.000000+00:00",
+      "end_time": "2026-08-29T12:20:00.600000+00:00",
+      "duration_ms": 600.0,
+      "status": "failure",
+      "provider": null,
+      "model": null,
+      "tokens_input": 0,
+      "tokens_output": 0,
+      "cost_usd": 0.0,
+      "retry_count": 0,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Tool execution failed with status 500"
+      },
+      "metadata": {}
+    },
+    {
+      "trace_id": "test-trace-failed-tool-003",
+      "span_id": "span-tool-003",
+      "parent_id": "span-root-003",
+      "name": "broken_db_query",
+      "kind": "db",
+      "start_time": "2026-08-29T12:20:00.100000+00:00",
+      "end_time": "2026-08-29T12:20:00.550000+00:00",
+      "duration_ms": 450.0,
+      "status": "failure",
+      "provider": "postgres",
+      "model": null,
+      "tokens_input": 0,
+      "tokens_output": 0,
+      "cost_usd": 0.0,
+      "retry_count": 0,
+      "error": {
+        "type": "ConnectionRefusedError",
+        "message": "Connection refused by database cluster"
+      },
+      "metadata": {}
+    }
+  ]
+}
