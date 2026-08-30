@@ -131,13 +131,55 @@ class AirunServerHandler(BaseHTTPRequestHandler):
         return
 
 
-def start_server(host: str = "0.0.0.0", port: int = 8080):
-    """Starts the airun web server and listens for requests."""
-    server_address = (host, port)
-    httpd = ThreadingHTTPServer(server_address, AirunServerHandler)
-    print(f"\n>> airun Web UI & Executive Dashboard running at: http://{host}:{port}")
-    print(f">> Local access: http://localhost:{port}")
-    print(">> Press Ctrl+C to stop the server.\n")
+class ResilientHTTPServer(ThreadingHTTPServer):
+    """Threading HTTP server with address reuse enabled."""
+    allow_reuse_address = True
+
+
+def start_server(host: str = "127.0.0.1", port: int = 8765):
+    """Starts the airun web server and listens for requests with automatic fallback."""
+    candidate_hosts = [host]
+    if host == "0.0.0.0" and "127.0.0.1" not in candidate_hosts:
+        candidate_hosts.append("127.0.0.1")
+    elif host == "127.0.0.1" and "localhost" not in candidate_hosts:
+        candidate_hosts.append("localhost")
+
+    candidate_ports = [port, 8765, 8080, 5000, 9000, 3000]
+    # Remove duplicates preserving order
+    candidate_ports = list(dict.fromkeys(candidate_ports))
+
+    httpd = None
+    active_host = host
+    active_port = port
+
+    for h in candidate_hosts:
+        for p in candidate_ports:
+            try:
+                server_address = (h, p)
+                httpd = ResilientHTTPServer(server_address, AirunServerHandler)
+                active_host = h
+                active_port = p
+                break
+            except (PermissionError, OSError):
+                continue
+        if httpd is not None:
+            break
+
+    if httpd is None:
+        print(f"\n[!] Error: Unable to bind to any available network port ({candidate_ports}).")
+        return
+
+    print("\n" + "=" * 60)
+    print("  🚀 airun AI Runtime Profiler & Executive Dashboard")
+    print("=" * 60)
+    print("  * Status:        ONLINE")
+    print(f"  * Local Web UI:  http://localhost:{active_port}")
+    if active_host not in ("127.0.0.1", "localhost"):
+        print(f"  * Network URL:   http://{active_host}:{active_port}")
+    print(f"  * Health check:  http://localhost:{active_port}/healthz")
+    print("=" * 60)
+    print(">> Press Ctrl+C to stop the dashboard server.\n")
+
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

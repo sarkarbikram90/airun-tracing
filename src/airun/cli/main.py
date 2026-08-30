@@ -428,8 +428,8 @@ def doctor() -> None:
 @app.command("ui")
 @app.command("serve")
 def serve_dashboard(
-    host: str = typer.Option("0.0.0.0", "--host", "-h", help="Host address to bind the web server"),
-    port: int = typer.Option(8080, "--port", "-p", help="Port number for the dashboard web server"),
+    host: str = typer.Option("127.0.0.1", "--host", "-h", help="Host address to bind the web server"),
+    port: int = typer.Option(8765, "--port", "-p", help="Port number for the dashboard web server"),
 ):
     """Launch the interactive airun Web UI and executive dashboard."""
     from airun.server import start_server
