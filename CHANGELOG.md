@@ -2,6 +2,25 @@
 
 All notable changes to `airun` are documented in this file.
 
+## [0.1.2] - 2026-08-30
+
+### Added
+- **Interactive Executive Web Dashboard (`airun ui` / `airun serve`)**:
+  - Built-in modern dark-mode single-page Web UI displaying high-level FinOps KPIs, execution trace tables, and DAG waterfall timelines.
+  - Severity-graded diagnostic findings panel (`[CRITICAL]`, `[WARNING]`, `[INFO]`) highlighting cost concentration, retry storms, and context bloat.
+  - Zero-dependency HTTP REST API endpoints (`/api/traces`, `/api/traces/<id>`, `/api/summary`, `/api/compare`, `/healthz`).
+  - Resilient networking with automatic port fallback (defaulting to `127.0.0.1:8765`) to prevent Windows socket permission collisions (`WinError 10013`).
+- **Real-World Multi-Model Agent Pipeline**:
+  - `examples/live_multi_model_agent.py` demonstrating live production agent profiling across Google Gemini (1.5 Flash), OpenAI (GPT-4o), Anthropic (Claude 3.5 Haiku), and Vector DB tools.
+  - Automatic fallback simulation when live API keys are not exported in the environment.
+- **AWS EKS Deployment Blueprint**:
+  - Production-ready Kubernetes manifests in `deploy/kubernetes/` (`pvc.yaml`, `deployment.yaml`, `service.yaml`, `ingress.yaml`, `kustomization.yaml`).
+  - AWS Application Load Balancer (ALB) and AWS EBS `gp3` persistent volume configuration.
+  - Step-by-step deployment guide in `docs/aws-eks-deployment-guide.md`.
+- **GitHub Container Registry (GHCR) Packages Automation**:
+  - Multi-stage Docker image automated publishing to `ghcr.io/sarkarbikram90/airun-tracing`.
+  - Future release and publishing runbook in `docs/release-guide.md`.
+
 ## [0.1.1] - 2026-08-29
 
 ### Added
