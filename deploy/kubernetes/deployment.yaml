@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airun-dashboard
+  namespace: default
+  labels:
+    app: airun
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airun
+  template:
+    metadata:
+      labels:
+        app: airun
+    spec:
+      containers:
+        - name: airun-server
+          image: ghcr.io/sarkarbikram90/airun-tracing:latest
+          imagePullPolicy: Always
+          command: ["airun", "ui", "--host", "0.0.0.0", "--port", "8080"]
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          volumeMounts:
+            - name: trace-data
+              mountPath: /app/.airun
+      volumes:
+        - name: trace-data
+          persistentVolumeClaim:
+            claimName: airun-trace-pvc

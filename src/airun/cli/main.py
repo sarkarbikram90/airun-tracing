@@ -423,3 +423,16 @@ def doctor() -> None:
 
     console.print(table)
     console.print()
+
+
+@app.command("ui")
+@app.command("serve")
+def serve_dashboard(
+    host: str = typer.Option("0.0.0.0", "--host", "-h", help="Host address to bind the web server"),
+    port: int = typer.Option(8080, "--port", "-p", help="Port number for the dashboard web server"),
+):
+    """Launch the interactive airun Web UI and executive dashboard."""
+    from airun.server import start_server
+
+    start_server(host=host, port=port)
+

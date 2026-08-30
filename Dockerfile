@@ -6,6 +6,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     git \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy project definition and install
@@ -19,4 +20,6 @@ RUN pip install --no-cache-dir -e .
 
 ENV PYTHONUNBUFFERED=1
 
-CMD ["airun", "demo"]
+EXPOSE 8080
+
+CMD ["airun", "ui", "--host", "0.0.0.0", "--port", "8080"]
